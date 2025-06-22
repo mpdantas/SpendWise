@@ -1,0 +1,13 @@
+/* src/components/DashboardCard.css */
+.dashboard-card {
+  background-color: #191c24;
+  border-radius: 5px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
+}
+.card-icon { font-size: 3em; color: #c81a3b; }
+.card-info p { margin: 0; color: #a5a7b2; font-size: 1em; }
+.card-info h3 { margin: 0; color: #ffffff; font-size: 1.5em; }

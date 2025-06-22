@@ -1,0 +1,6 @@
+/* src/components/BarChart.css */
+.chart-container {
+    background-color: #191c24; /* Mesmo fundo dos cards */
+    padding: 20px;
+    border-radius: 5px;
+}

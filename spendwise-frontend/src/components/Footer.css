@@ -1,0 +1,13 @@
+/* src/components/Footer.css */
+.main-footer-component {
+  margin-top: 40px; /* Espaço acima do rodapé */
+  padding: 20px 0;
+  border-top: 1px solid #2c2e33; /* Linha para separar do conteúdo */
+  text-align: center;
+}
+
+.main-footer-component p {
+  margin: 0;
+  color: #a5a7b2; /* Cor de texto padrão */
+  font-size: 14px;
+}

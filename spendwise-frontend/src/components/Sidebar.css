@@ -1,0 +1,21 @@
+/* src/components/Sidebar.css */
+.sidebar {
+  width: 250px;
+  background-color: #191c24;
+  color: #a5a7b2;
+  height: 100vh;
+  padding: 20px;
+}
+.user-panel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #2c2e33;
+}
+.user-info h4 { margin: 0; font-weight: 500; color: #ffffff; }
+.user-info p { margin: 0; font-size: 14px; }
+.nav-menu { list-style: none; padding: 0; margin: 0; }
+.nav-menu li { padding: 15px; cursor: pointer; border-radius: 5px; margin-bottom: 5px; }
+.nav-menu li.active { background-color: #c81a3b; color: #ffffff; }
+.nav-menu li:hover { background-color: #2c2e33; }

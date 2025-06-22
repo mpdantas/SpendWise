@@ -1,0 +1,6 @@
+/* src/components/AreaChart.css */
+.chart-container {
+    background-color: #191c24;
+    padding: 20px;
+    border-radius: 5px;
+}

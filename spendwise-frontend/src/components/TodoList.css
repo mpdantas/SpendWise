@@ -1,0 +1,89 @@
+/* src/components/TodoList.css */
+.todo-list-widget {
+  background-color: #191c24;
+  padding: 20px;
+  border-radius: 5px;
+  flex: 1; /* Para ocupar o espaço disponível */
+  min-width: 300px;
+}
+
+.todo-list-widget h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-weight: 500;
+  border-bottom: 1px solid #2c2e33;
+  padding-bottom: 10px;
+}
+
+.todo-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.todo-form input {
+  flex-grow: 1;
+  background-color: #000;
+  border: 1px solid #2c2e33;
+  color: #fff;
+  padding: 8px;
+  border-radius: 5px 0 0 5px;
+}
+
+.todo-form input:focus {
+  outline: none;
+  border-color: #c81a3b;
+}
+
+.todo-form button {
+  background-color: #c81a3b;
+  border: none;
+  color: #fff;
+  padding: 0 15px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* Altura máxima com barra de rolagem */
+  overflow-y: auto;
+}
+
+.task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px;
+  border-bottom: 1px solid #2c2e33;
+  color: #a5a7b2;
+}
+
+.task-list li:last-child {
+  border-bottom: none;
+}
+
+.task-text {
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.task-list li.completed .task-text {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #a5a7b2;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0 5px;
+}
+
+.delete-button:hover {
+  color: #c81a3b;
+}

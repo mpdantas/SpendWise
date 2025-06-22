@@ -1,0 +1,54 @@
+/* src/components/RecentTransactionsTable.css */
+.recent-transactions-widget {
+  background-color: #191c24;
+  padding: 20px;
+  border-radius: 5px;
+  flex: 2; /* Faz este widget ser um pouco maior que a To-Do List */
+}
+
+.recent-transactions-widget h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-weight: 500;
+  border-bottom: 1px solid #2c2e33;
+  padding-bottom: 10px;
+}
+
+.recent-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-table th,
+.recent-table td {
+  padding: 12px 5px;
+  text-align: left;
+  border-bottom: 1px solid #2c2e33;
+  color: #a5a7b2;
+  font-size: 14px;
+}
+
+.recent-table th {
+  color: #fff;
+  font-weight: 500;
+}
+
+.recent-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Reutilizando as classes de cor que já definimos antes */
+.recent-table .expense {
+  color: #ff6b6b;
+}
+
+.recent-table .income {
+  color: #1dd1a1;
+}
+
+.no-transactions {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}

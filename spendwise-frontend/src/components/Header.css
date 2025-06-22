@@ -1,0 +1,28 @@
+/* src/components/Header.css */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #2c2e33;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Estilos para a IMAGEM do logo */
+.logo-image {
+  height: 50px; /* Ajuste esta altura conforme o seu gosto */
+  width: auto; /* Mantém a proporção da imagem */
+}
+
+.system-name {
+  font-size: 24px;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 500;
+}
