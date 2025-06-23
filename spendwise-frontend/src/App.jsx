@@ -1,4 +1,4 @@
-// src/App.jsx (Versão Final Completa e Corrigida)
+// src/App.jsx (Versão Final sem o console.log de debug)
 
 import React, { useState, useMemo, useEffect } from 'react';
 
@@ -28,14 +28,19 @@ function App() {
       const savedTransactions = localStorage.getItem('spendwise_transactions');
       return savedTransactions ? JSON.parse(savedTransactions) : [];
     } catch (error) {
-      console.error("Failed to parse transactions from localStorage", error);
+      console.error("Falha ao ler as transações do localStorage:", error);
       return [];
     }
   });
 
   const [categories, setCategories] = useState(() => {
-    const saved = localStorage.getItem('spendwise_categories');
-    return saved ? JSON.parse(saved) : ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Outros'];
+    try {
+      const saved = localStorage.getItem('spendwise_categories');
+      return saved ? JSON.parse(saved) : ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Outros'];
+    } catch (error) {
+      console.error("Falha ao ler as categorias do localStorage:", error);
+      return ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Outros'];
+    }
   });
   
   useEffect(() => {
@@ -49,7 +54,6 @@ function App() {
   const handleDeleteTransaction = (id) => {
     setTransactions(transactions.filter(t => t.id !== id));
   };
-
   const handleUpdateTransaction = (id, updatedData) => {
     setTransactions(transactions.map(t => (t.id === id ? { ...t, ...updatedData } : t)));
   };
@@ -96,8 +100,6 @@ function App() {
       <main className="main-content">
         <Header />
 
-        {/* --- CONTEÚDO DO DASHBOARD --- */}
-        {/* Garanta que este bloco está completo no seu código */}
         {activePage === 'dashboard' && (
           <>
             <div className="cards-container">
@@ -115,6 +117,13 @@ function App() {
               <CalendarWidget transactions={transactions} />
             </div>
           </>
+        )}
+        
+        {activePage === 'charts' && (
+          <div className="charts-section">
+            <BarChart chartData={barChartData} />
+            <AreaChart chartData={areaChartData} />
+          </div>
         )}
 
         {activePage === 'transactions' && (

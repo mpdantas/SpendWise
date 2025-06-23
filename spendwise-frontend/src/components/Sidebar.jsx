@@ -1,26 +1,34 @@
-// src/components/Sidebar.jsx
+// src/components/Sidebar.jsx (com o novo item de menu)
+
 import React from 'react';
 import './Sidebar.css';
 
-// 1. Recebemos 'activePage' e 'onMenuClick' como propriedades
 function Sidebar({ activePage, onMenuClick }) {
   return (
     <div className="sidebar">
       <div className="user-panel">
         <div className="user-info">
-          <h4>Jhon Doe</h4>
-          <p>Admin</p>
+          <h4>MD Tech</h4>
         </div>
       </div>
+      
       <ul className="nav-menu">
-        {/* 2. Adicionamos o evento onClick para chamar a função que muda de página */}
-        {/* 3. A classe 'active' agora é definida dinamicamente */}
         <li 
           className={activePage === 'dashboard' ? 'active' : ''}
           onClick={() => onMenuClick('dashboard')}
         >
           Dashboard
         </li>
+        
+        {/* --- NOVO ITEM ADICIONADO AQUI --- */}
+        <li
+          className={activePage === 'charts' ? 'active' : ''}
+          onClick={() => onMenuClick('charts')}
+        >
+          Gráficos
+        </li>
+        {/* ---------------------------------- */}
+        
         <li
           className={activePage === 'transactions' ? 'active' : ''}
           onClick={() => onMenuClick('transactions')}
