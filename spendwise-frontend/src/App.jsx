@@ -1,4 +1,4 @@
-// src/App.jsx (Versão Final sem o console.log de debug)
+// src/App.jsx (Versão Final e 100% Completa com CRUD via API)
 
 import React, { useState, useMemo, useEffect } from 'react';
 
@@ -22,17 +22,7 @@ import { FaDollarSign, FaChartBar, FaChartPie } from 'react-icons/fa';
 
 function App() {
   const [activePage, setActivePage] = useState('dashboard');
-
-  const [transactions, setTransactions] = useState(() => {
-    try {
-      const savedTransactions = localStorage.getItem('spendwise_transactions');
-      return savedTransactions ? JSON.parse(savedTransactions) : [];
-    } catch (error) {
-      console.error("Falha ao ler as transações do localStorage:", error);
-      return [];
-    }
-  });
-
+  const [transactions, setTransactions] = useState([]);
   const [categories, setCategories] = useState(() => {
     try {
       const saved = localStorage.getItem('spendwise_categories');
@@ -42,21 +32,77 @@ function App() {
       return ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Outros'];
     }
   });
-  
-  useEffect(() => {
-    localStorage.setItem('spendwise_transactions', JSON.stringify(transactions));
-  }, [transactions]);
-  
+
+  // Salva apenas as categorias no localStorage
   useEffect(() => {
     localStorage.setItem('spendwise_categories', JSON.stringify(categories));
   }, [categories]);
 
-  const handleDeleteTransaction = (id) => {
-    setTransactions(transactions.filter(t => t.id !== id));
+  // Busca as transações da API quando o aplicativo carrega
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/transactions');
+        if (!response.ok) { throw new Error('A resposta da rede não foi ok'); }
+        const data = await response.json();
+        setTransactions(data);
+      } catch (error) {
+        console.error("Erro ao buscar transações da API:", error);
+      }
+    };
+    fetchTransactions();
+  }, []);
+
+  // --- FUNÇÕES DE MANIPULAÇÃO VIA API ---
+
+  const handleAddTransaction = async (transactionData) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(transactionData),
+      });
+      if (!response.ok) { throw new Error('Falha ao adicionar transação'); }
+      const newTransactionFromServer = await response.json();
+      setTransactions([...transactions, newTransactionFromServer]);
+    } catch (error) {
+      console.error("Erro ao adicionar transação:", error);
+    }
   };
-  const handleUpdateTransaction = (id, updatedData) => {
-    setTransactions(transactions.map(t => (t.id === id ? { ...t, ...updatedData } : t)));
+
+  const handleDeleteTransaction = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/transactions/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) { throw new Error('Falha ao deletar transação'); }
+      // Se a API deletou com sucesso, atualizamos o estado local
+      setTransactions(transactions.filter(t => t.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar transação:", error);
+    }
   };
+
+  const handleUpdateTransaction = async (id, updatedData) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/transactions/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      });
+      if (!response.ok) { throw new Error('Falha ao atualizar transação'); }
+      const updatedTransactionFromServer = await response.json();
+      // Atualiza o estado local com a versão final confirmada pelo servidor
+      setTransactions(
+        transactions.map(t => (t.id === id ? updatedTransactionFromServer : t))
+      );
+    } catch (error) {
+      console.error("Erro ao atualizar transação:", error);
+    }
+  };
+
+
+  // --- CÁLCULOS PARA EXIBIÇÃO ---
 
   const totals = useMemo(() => {
     const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
@@ -94,12 +140,13 @@ function App() {
 
   const formatCurrency = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+
   return (
     <div className="app">
       <Sidebar activePage={activePage} onMenuClick={setActivePage} />
       <main className="main-content">
         <Header />
-
+        
         {activePage === 'dashboard' && (
           <>
             <div className="cards-container">
@@ -129,7 +176,7 @@ function App() {
         {activePage === 'transactions' && (
           <TransactionsPage
             transactions={transactions}
-            setTransactions={setTransactions}
+            onAddTransaction={handleAddTransaction}
             handleDelete={handleDeleteTransaction}
             handleUpdate={handleUpdateTransaction}
             categories={categories}

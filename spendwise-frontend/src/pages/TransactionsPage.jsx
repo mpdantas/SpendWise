@@ -1,11 +1,11 @@
-// src/pages/TransactionsPage.jsx (Com a correção final do loop infinito)
+// src/pages/TransactionsPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import './TransactionsPage.css';
 
 const getTodayString = () => new Date().toISOString().split('T')[0];
 
-const TransactionsPage = ({ transactions, setTransactions, handleDelete, handleUpdate, categories }) => {
+const TransactionsPage = ({ transactions, onAddTransaction, handleDelete, handleUpdate, categories }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [type, setType] = useState('expense');
@@ -13,19 +13,13 @@ const TransactionsPage = ({ transactions, setTransactions, handleDelete, handleU
   const [date, setDate] = useState(getTodayString());
   const [editingId, setEditingId] = useState(null);
 
-  // --- CORREÇÃO DEFINITIVA DO useEffect ---
-  // Este hook agora só "escuta" por mudanças na lista de 'categories' que vem do App.jsx.
-  // Ele não depende mais da variável 'category' que ele mesmo modifica, quebrando o loop.
   useEffect(() => {
-    // Se a categoria selecionada atualmente não existir mais na lista principal...
     if (categories && categories.length > 0 && !categories.includes(category)) {
-      // ...seleciona a primeira categoria disponível.
       setCategory(categories[0]);
     } else if ((!categories || categories.length === 0) && category !== '') {
-      // ...ou limpa a seleção se a lista de categorias ficar vazia.
       setCategory('');
     }
-  }, [categories, category]); // A dependência é APENAS 'categories'.
+  }, [categories, category]);
 
   const resetForm = () => {
     setDescription('');
@@ -61,7 +55,8 @@ const TransactionsPage = ({ transactions, setTransactions, handleDelete, handleU
     if (editingId) {
       handleUpdate(editingId, transactionData);
     } else {
-      setTransactions([...transactions, { id: Date.now(), ...transactionData }]);
+      // Chama a função que veio do App.jsx
+      onAddTransaction(transactionData);
     }
     resetForm();
   };
@@ -110,7 +105,6 @@ const TransactionsPage = ({ transactions, setTransactions, handleDelete, handleU
           </button>
         )}
       </form>
-
       <h2>Histórico de Transações</h2>
       <table className="transactions-table">
         <thead>
