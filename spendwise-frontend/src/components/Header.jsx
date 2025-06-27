@@ -1,8 +1,10 @@
-// src/components/Header.jsx (Com a correção da exportação)
+// src/components/Header.jsx
 import React from 'react';
+import { FaWallet } from 'react-icons/fa';
 import './Header.css';
 
-const Header = () => {
+// 1. O componente agora recebe a prop 'onLogout'
+const Header = ({ onLogout }) => {
   return (
     <header className="main-header">
       <div className="logo-container">
@@ -13,9 +15,13 @@ const Header = () => {
         />
         <h1 className="system-name">SpendWise</h1>
       </div>
+      
+      {/* 2. Adicionamos o botão de logout que chama a função onLogout ao ser clicado */}
+      <button onClick={onLogout} className="logout-button">
+        Sair
+      </button>
     </header>
   );
 };
 
-// A LINHA MAIS IMPORTANTE - GARANTA QUE ELA ESTEJA AQUI
 export default Header;

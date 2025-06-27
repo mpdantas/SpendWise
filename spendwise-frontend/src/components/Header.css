@@ -14,10 +14,9 @@
   gap: 12px;
 }
 
-/* Estilos para a IMAGEM do logo */
 .logo-image {
-  height: 50px; /* Ajuste esta altura conforme o seu gosto */
-  width: auto; /* Mantém a proporção da imagem */
+  height: 30px;
+  width: auto;
 }
 
 .system-name {
@@ -25,4 +24,23 @@
   color: #ffffff;
   margin: 0;
   font-weight: 500;
+}
+
+/* --- ESTILO PARA O NOVO BOTÃO --- */
+.logout-button {
+  background-color: transparent;
+  color: #a5a7b2;
+  border: 1px solid #a5a7b2;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.logout-button:hover {
+  background-color: #c81a3b;
+  color: #ffffff;
+  border-color: #c81a3b;
 }
