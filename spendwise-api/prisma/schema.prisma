@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- ADICIONE O MODELO ABAIXO ---
+model User {
+  id                 Int      @id @default(autoincrement()) // ID numérico, chave primária, gerado automaticamente
+  email              String   @unique                      // Email para login, deve ser único
+  passwordHash       String                               // A senha já criptografada (hash)
+  companyName        String                               // Nome da empresa do usuário
+  mustChangePassword Boolean  @default(true)               // Flag para forçar a troca de senha no primeiro acesso
+  
+  createdAt          DateTime @default(now())              // Data de criação, gerada automaticamente
+  updatedAt          DateTime @updatedAt                   // Data da última atualização, gerada automaticamente
+}
